@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Berita</title>
 
     <!-- Bootstrap 5 CSS -->
@@ -13,62 +12,76 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-light">
 
-    <div class="container my-5">
+    <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
 
-                <div class="card shadow-lg border-0 rounded">
-                    <div class="card-header bg-primary text-white text-center">
-                        <h2 class="mb-0">Tambah Berita</h2>
+                <div class="card border-0 shadow-lg rounded-4">
+
+                    <!-- Card Header -->
+                    <div class="card-header text-white text-center rounded-top-4"
+                        style="background: linear-gradient(135deg, #0d6efd, #0b5ed7);">
+                        <h3 class="mb-0 fw-semibold">
+                            <i class="bi bi-newspaper"></i> Tambah Berita
+                        </h3>
                     </div>
 
-                    <div class="card-body">
+                    <!-- Card Body -->
+                    <div class="card-body p-4 p-md-5 bg-white">
                         <form method="POST" action="<?= BASE_PATH ?>/admin/berita/store" enctype="multipart/form-data">
 
-                            <div class="mb-3">
-                                <label for="title" class="form-label fw-bold">Judul Berita</label>
-                                <input type="text" id="title" name="title" class="form-control form-control-lg"
-                                    placeholder="Masukkan judul berita" required>
+                            <!-- Judul -->
+                            <div class="form-floating mb-4">
+                                <input type="text" class="form-control" id="title" name="title"
+                                    placeholder="Judul Berita" required>
+                                <label for="title">Judul Berita</label>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="author" class="form-label fw-bold">Penulis</label>
-                                <input type="text" id="author" name="author" class="form-control form-control-lg"
-                                    placeholder="Masukkan nama penulis" required>
+                            <!-- Penulis -->
+                            <div class="form-floating mb-4">
+                                <input type="text" class="form-control" id="author" name="author" placeholder="Penulis"
+                                    required>
+                                <label for="author">Penulis</label>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="content" class="form-label fw-bold">Isi Berita</label>
-                                <textarea id="content" name="content" rows="8" class="form-control"
-                                    placeholder="Masukkan isi berita" required></textarea>
-                            </div>
-
+                            <!-- Thumbnail -->
                             <div class="mb-4">
-                                <label for="thumbnail" class="form-label fw-bold">Thumbnail</label>
-                                <input type="file" id="thumbnail" name="thumbnail" class="form-control">
+                                <label for="thumbnail" class="form-label fw-semibold">Thumbnail</label>
+                                <input type="file" class="form-control" id="thumbnail" name="thumbnail">
+                                <small class="text-muted">JPG / PNG, max 2MB</small>
                             </div>
 
-                            <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-success btn-lg flex-fill">
+                            <!-- Isi -->
+                            <div class="mb-5">
+                                <label for="content" class="form-label fw-semibold">Isi Berita</label>
+                                <textarea class="form-control" id="content" name="content" rows="10"
+                                    placeholder="Tulis isi berita di sini..." required></textarea>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="d-flex gap-3">
+                                <button type="submit" class="btn btn-success px-4">
                                     <i class="bi bi-save me-1"></i> Simpan Berita
                                 </button>
-                                <a href="<?= BASE_PATH ?>/admin/berita" class="btn btn-secondary btn-lg flex-fill">
-                                    <i class="bi bi-arrow-left me-1"></i> Kembali
+                                <a href="<?= BASE_PATH ?>/admin/berita" class="btn btn-outline-secondary px-4">
+                                    <i class="bi bi-arrow-left"></i> Kembali
                                 </a>
                             </div>
 
                         </form>
                     </div>
+
                 </div>
 
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap 5 JS Bundle (Popper + JS) -->
+    <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

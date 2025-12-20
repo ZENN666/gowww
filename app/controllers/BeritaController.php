@@ -7,8 +7,8 @@ class BeritaController
 
         $stmt = $pdo->query(
             "SELECT id, title, author, slug, thumbnail, content, created_at
-             FROM berita
-             ORDER BY created_at DESC"
+FROM berita
+ORDER BY created_at DESC"
         );
 
         $posts = $stmt->fetchAll();
@@ -23,9 +23,9 @@ class BeritaController
 
         $stmt = $pdo->prepare(
             "SELECT id, title, author, slug, thumbnail, content, created_at
-             FROM berita
-             WHERE slug = :slug
-             LIMIT 1"
+FROM berita
+WHERE slug = :slug
+LIMIT 1"
         );
 
         $stmt->execute(['slug' => $slug]);
@@ -37,7 +37,7 @@ class BeritaController
             exit;
         }
 
-        $title = htmlspecialchars($post['title']);
+        $title = $post['title'];
         include __DIR__ . '/../Views/berita/detail.php';
     }
 }
