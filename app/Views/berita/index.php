@@ -3,19 +3,90 @@ $title = 'Berita GOW Kota Tegal';
 ob_start();
 ?>
 
-<!-- OFFSET karena navbar fixed -->
 <style>
-    .page-offset {
-        padding-top: 140px;
+    /* =========================
+       HERO (ABSOLUTE, NO GAP TOP)
+       ========================= */
+
+    .page-hero {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 350px;
+
+        background:
+            linear-gradient(rgba(198, 35, 104, 0.78), rgba(198, 35, 104, 0.78)),
+            url("<?= base_url('assets/img/hero-berita.jpg') ?>");
+        background-size: cover;
+        background-position: center;
+
+        display: flex;
+        align-items: center;
+        color: #fff;
+
+        border-bottom-left-radius: 48px;
+        border-bottom-right-radius: 48px;
+        overflow: hidden;
+
+        z-index: 1;
+    }
+
+    .page-hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+    }
+
+    /* SPACER */
+    .hero-spacer {
+        height: 420px;
+    }
+
+    /* CONTENT NAIK KE HERO */
+    .content-section {
+        margin-top: -280px;
+        /* 🔥 PENGATUR JARAK */
+        padding-top: 120px;
+    }
+
+    @media (max-width: 768px) {
+        .page-hero {
+            height: 320px;
+            border-bottom-left-radius: 28px;
+            border-bottom-right-radius: 28px;
+        }
+
+        .hero-spacer {
+            height: 320px;
+        }
+
+        .content-section {
+            margin-top: -80px;
+            padding-top: 80px;
+        }
+
+        .page-hero h1 {
+            font-size: 2rem;
+        }
     }
 </style>
 
-<!-- NAVBAR -->
+<!-- NAVBAR (TIDAK DISENTUH) -->
 <?php include __DIR__ . '/../partials/navbar.php'; ?>
 
-<section class="py-5 bg-light page-offset">
+<!-- HERO -->
+<section class="page-hero">
     <div class="container">
-        <h3 class="fw-bold mb-4">Berita & Artikel</h3>
+        <h1>Berita & Kegiatan</h1>
+    </div>
+</section>
+
+<!-- SPACER -->
+<div class="hero-spacer"></div>
+
+<!-- CONTENT -->
+<section class="py-5 bg-light content-section">
+    <div class="container">
 
         <div class="row g-4">
             <?php if (empty($posts)): ?>
@@ -47,6 +118,7 @@ ob_start();
                                 Baca Selengkapnya
                             </a>
                         </div>
+
                     </div>
                 </div>
             <?php endforeach; ?>
