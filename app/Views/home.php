@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>GOW Kota Tegal | Website Resmi</title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 
     <style>
@@ -127,22 +127,6 @@
             }
         }
 
-        /* Mobile */
-        @media (max-width: 576px) {
-            .hero {
-                padding-top: 120px;
-                padding-bottom: 80px;
-            }
-
-            /* Mobile lebih gelap biar kebaca */
-            .hero::before {
-                background-image:
-                    linear-gradient(rgba(0, 0, 0, 0.55),
-                        rgba(0, 0, 0, 0.55)),
-                    url("<?= base_url('assets/img/banner.webp') ?>");
-            }
-        }
-
         /* ================= HERO TEXT ================= */
         .hero-content {
             margin-top: -60px;
@@ -204,6 +188,89 @@
             /* ⬅️ wave paling atas */
         }
 
+        /* ================= FIX TAMPILAN HERO MOBILE (WAJIB) ================= */
+        @media (max-width: 768px) {
+
+            /* 1. Tambah jarak atas hero biar turun ke bawah menjauhi navbar */
+            .hero {
+                /* Ditambah jadi 170px biar ga ketutup navbar */
+                padding-top: 170px !important;
+                padding-bottom: 60px;
+            }
+
+            /* 2. Mobile Background lebih gelap */
+            .hero::before {
+                background-image:
+                    linear-gradient(rgba(0, 0, 0, 0.55),
+                        rgba(0, 0, 0, 0.55)),
+                    url("<?= base_url('assets/img/banner.webp') ?>");
+            }
+
+            /* 3. Hapus margin negative yang bikin teks ketarik ke atas */
+            .hero-content {
+                margin-top: 0 !important;
+                /* Reset margin jadi normal */
+                padding-bottom: 40px;
+                /* Kasih jarak antara teks dan foto */
+            }
+
+            /* 4. Pastikan teks rata kiri & ukurannya pas */
+            .hero h1 {
+                font-size: 2.2rem;
+                /* Ukuran font judul di HP */
+            }
+
+            .hero small {
+                display: block;
+                margin-bottom: 10px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* ================= HERO SHAPE OVERLAY (FIX DESKTOP) ================= */
+        .hero-shape-bg {
+            position: absolute;
+
+            /* 1. PAKU DARI ATAS */
+            top: -50%;
+
+            /* 2. GESER KE KANAN (Desktop Fix) */
+            /* Jangan 50%, tapi coba 65% atau 70% biar ngepas sama gambar yg rata kanan */
+            left: 65%;
+            transform: translateX(-60%);
+
+            /* 3. TINGGI */
+            height: 160%;
+
+            /* Ukuran */
+            width: 70%;
+            max-width: 420px;
+
+            /* Warna */
+            background: linear-gradient(180deg, rgba(255, 100, 0, 0.5) 0%, rgba(255, 60, 0, 0.2) 100%);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+
+            /* Rounded */
+            border-radius: 30px 30px 200px 200px;
+
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Responsif HP (Balikin ke Tengah) */
+        @media (max-width: 991px) {
+            .hero-shape-bg {
+                /* Di HP harus balik ke 50% karena gambar biasanya rata tengah di HP */
+                left: 55%;
+
+                width: 85%;
+                max-width: 400px;
+                height: 110%;
+                top: -5%;
+                border-radius: 20px 20px 100px 100px;
+            }
+        }
 
         /* ================= STATS ================= */
         .stats {
@@ -282,6 +349,212 @@
                 text-align: center !important;
             }
         }
+
+        /* ================= SAMBUTAN KETUA (COMPACT VERSION) ================= */
+        .sambutan-section {
+            background-color: #fffaf5;
+            /* Padding dikecilkan biar ga terlalu makan tempat */
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .sambutan-img-wrapper {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+            width: 100%;
+            /* Lebar foto dikecilkan (sebelumnya 380px) */
+            max-width: 300px;
+        }
+
+        /* Latar belakang bentuk lonjong di belakang foto */
+        .sambutan-img-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            height: 95%;
+            background: linear-gradient(180deg, rgba(255, 127, 0, 0.1) 0%, rgba(255, 167, 38, 0.3) 100%);
+            /* Radius disesuaikan dengan lebar baru (150px = setengah dari 300px) */
+            border-radius: 150px 150px 20px 20px;
+            z-index: -1;
+        }
+
+        .sambutan-img {
+            width: 100%;
+            height: auto;
+            /* Radius disesuaikan dengan lebar baru */
+            border-radius: 150px 150px 20px 20px;
+            border-bottom: 4px solid #ff7f00;
+            /* Garis sedikit ditipiskan */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .sambutan-content h2 {
+            font-weight: 400;
+            color: #333;
+            margin-bottom: 0;
+            text-transform: uppercase;
+            /* Font size dikecilkan (sebelumnya 1.8rem) */
+            font-size: 1.4rem;
+        }
+
+        .sambutan-content h3 {
+            font-weight: 800;
+            color: #880e4f;
+            /* Font size dikecilkan (sebelumnya 2rem) */
+            font-size: 1.7rem;
+            margin-bottom: 15px;
+            /* Margin dikurangi */
+        }
+
+        .sambutan-text {
+            color: #555;
+            line-height: 1.6;
+            /* Spasi baris sedikit dirapatkan */
+            font-size: 0.95rem;
+            /* Font size dikecilkan sedikit */
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .sambutan-name {
+            font-weight: 800;
+            color: #880e4f;
+            font-size: 1.1rem;
+            /* Font size dikecilkan */
+            margin-bottom: 2px;
+        }
+
+        .sambutan-jabatan {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: #777;
+            letter-spacing: 1px;
+            border-top: 1px solid #ddd;
+            padding-top: 8px;
+            display: inline-block;
+        }
+
+        /* ================= RESPONSIVE SAMBUTAN (MOBILE) ================= */
+        @media (max-width: 768px) {
+
+            /* 1. Kecilkan padding section biar ga terlalu boros tempat di HP */
+            .sambutan-section {
+                padding-top: 30px;
+                padding-bottom: 30px;
+            }
+
+            /* 2. Ubah ukuran wrapper foto jadi lebih kecil */
+            .sambutan-img-wrapper {
+                max-width: 200px;
+                /* Ukuran di HP (Desktopnya 300px) */
+
+                /* Pastikan rata kiri, reset margin auto jika ada */
+                margin-left: 0;
+                margin-right: auto;
+            }
+
+            /* 3. Sesuaikan lengkungan background & border dengan ukuran baru */
+            .sambutan-img-wrapper::before,
+            .sambutan-img {
+                /* Radiusnya setengah dari max-width (200px / 2 = 100px) */
+                border-radius: 100px 100px 15px 15px;
+            }
+
+            /* (Opsional) Kecilkan sedikit font judul di HP biar proporsional */
+            .sambutan-content h3 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* ================= PARTNER LOGO CAROUSEL ================= */
+        .partner-section {
+            padding: 60px 0;
+            background: #fff;
+            /* Latar putih bersih */
+            border-bottom: 1px solid #eee;
+        }
+
+        .partner-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .partner-title h3 {
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* Container Swiper */
+        .logo-swiper {
+            width: 100%;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        /* Styling per item slide */
+        .logo-swiper .swiper-slide {
+            /* Mengatur agar logo di tengah vertikal/horizontal */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+            /* Tinggi area logo tetap */
+        }
+
+        /* Styling Gambar Logo */
+        .logo-item img {
+            max-width: 100%;
+            max-height: 80px;
+            /* Batasi tinggi maksimal logo agar seragam */
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            /* Agar gambar tidak gepeng */
+
+            /* --- PERUBAHAN DI SINI: GRAYSCALE & OPACITY DIHAPUS --- */
+            /* filter: grayscale(100%); */
+            /* opacity: 0.7; */
+
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Efek saat hover: Sedikit membesar saja */
+        .logo-item img:hover {
+            transform: scale(1.1);
+        }
+
+        /* CSS KHUSUS AGAR JALANNYA MULUS (LINEAR) */
+        .logo-swiper .swiper-wrapper {
+            transition-timing-function: linear;
+        }
+
+        /* ================= ANIMASI GAMBAR MUNCUL DARI BAWAH ================= */
+        /* 1. Bikin Keyframenya dulu */
+        @keyframes slideUpFade {
+            0% {
+                opacity: 0;
+                /* Awalnya transparan */
+                transform: translateY(150px);
+                /* Posisi awal: Turun 150px ke bawah */
+            }
+
+            100% {
+                opacity: 1;
+                /* Muncul penuh */
+                transform: translateY(0);
+                /* Kembali ke posisi normal */
+            }
+        }
+
+        /* 2. Bikin Class untuk ditempel ke gambar */
+        .hero-animate-img {
+            /* Panggil animasi 'slideUpFade', durasi 1.2 detik, gerakan mulus (ease-out) */
+            animation: slideUpFade 1.2s ease-out forwards;
+        }
     </style>
 </head>
 
@@ -289,7 +562,6 @@
 
     <?php include __DIR__ . '/partials/navbar.php'; ?>
 
-    <!-- ================= HERO ================= -->
     <section class="hero">
         <div class="container">
             <div class="row align-items-center">
@@ -308,16 +580,17 @@
                     </a>
                 </div>
 
-                <div class="col-md-6 hero-image text-md-end text-center">
-                    <img src="<?= base_url('assets/img/banner2.png') ?>" class="img-fluid" loading="lazy"
-                        alt="Hero GOW">
-                </div>
+                <div class="col-md-6 hero-image text-md-end text-center position-relative">
 
+                    <div class="hero-shape-bg"></div>
+
+                    <img src="<?= base_url('assets/img/banner2.png') ?>" class="img-fluid hero-animate-img"
+                        loading="lazy" alt="Hero GOW" style="position: relative; z-index: 2;">
+
+                </div>
             </div>
-        </div>
     </section>
 
-    <!-- ================= STATS ================= -->
     <section class="container-fluid px-0">
         <div class="container">
             <div class="stats row">
@@ -340,13 +613,102 @@
             </div>
     </section>
 
+    <section class="sambutan-section">
+        <div class="container">
+            <div class="row align-items-center">
 
-    <!-- ================= BERITA ================= -->
+                <div class="col-md-5 text-start text-md-center mb-4 mb-md-0">
+                    <div class="sambutan-img-wrapper">
+                        <img src="<?= base_url('assets/img/ketua-umum.webp') ?>" class="sambutan-img"
+                            alt="Ketua Umum GOW">
+                    </div>
+                </div>
+
+                <div class="col-md-7 sambutan-content ps-md-5">
+                    <h2>Sambutan Ketua Umum</h2>
+                    <h3>GOW Kota Tegal</h3>
+
+                    <div class="sambutan-text">
+                        <p>
+                            Alhamdulillah segala puji bagi Allah SWT atas rahmat-Nya Gabungan Organisasi Wanita (GOW)
+                            Kota Tegal dapat terus hadir membawa semangat untuk kemajuan pembangunan dan pemberdayaan
+                            perempuan di Kota Tegal.
+                        </p>
+                        <p>
+                            Melalui peluncuran pembaharuan website ini, kami berharap sinergitas antar organisasi wanita
+                            semakin kuat,
+                            mandiri, dan akuntabel. Semoga media ini dapat menjadi sarana informasi dan edukasi yang
+                            bermanfaat bagi seluruh anggota maupun masyarakat luas.
+                        </p>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="sambutan-name">Ny. Debby Firoeza Indiany </div>
+                        <div class="sambutan-jabatan">Ketua Umum GOW Kota Tegal Periode 2025-2030</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>>
+
+    <section class="partner-section">
+        <div class="container">
+            <div class="partner-title">
+                <h3>Organisasi Anggota & Mitra </h3>
+                <p class="text-muted">Bersinergi membangun Kota Tegal</p>
+            </div>
+
+            <div class="swiper logo-swiper">
+                <div class="swiper-wrapper align-items-center">
+
+                    <div class="swiper-slide">
+                        <div class="logo-item">
+                            <img src="<?= base_url('assets/img/hwk.png') ?>" alt="Logo Partner 1">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="logo-item">
+                            <img src="<?= base_url('assets/img/iwapi.png') ?>" alt="Logo Partner 2">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="logo-item">
+                            <img src="<?= base_url('assets/img/muslimat-nu.png') ?>" alt="Logo Partner 3">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="logo-item">
+                            <img src="<?= base_url('assets/img/wis.png') ?>" alt="Logo Partner 4">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="logo-item">
+                            <img src="<?= base_url('assets/img/ibi.png') ?>" alt="Logo Partner 5">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="logo-item">
+                            <img src="https://via.placeholder.com/150x80/eee/999?text=IBI+Cabang" alt="Logo Partner 6">
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="logo-item">
+                            <img src="https://via.placeholder.com/150x80/eee/999?text=Salimah" alt="Logo Partner 7">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <section class="py-5 mt-5">
         <div class="container">
 
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3 class="fw-bold">Berita Terbaru</h3>
+                <h3 class="fw-bold">Berita & Informasi Terkini</h3>
                 <a href="<?= base_url('berita') ?>" class="btn btn-sm btn-outline-warning">
                     Lihat Semua
                 </a>
@@ -375,12 +737,18 @@
         </div>
     </section>
 
+
+
     <?php include __DIR__ . '/partials/footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+
+            // ====================== 1. LOGIC STATS COUNTER ======================
             const counters = document.querySelectorAll(".count-up");
             const duration = 1500; // durasi animasi (ms)
 
@@ -405,9 +773,47 @@
 
                 requestAnimationFrame(animateCount);
             });
+
+
+            // ====================== 2. LOGIC SWIPER LOGO (CONTINUOUS) ======================
+            var swiperLogo = new Swiper(".logo-swiper", {
+                slidesPerView: 2,
+                spaceBetween: 20,
+                loop: true,
+                grabCursor: true,
+
+                // KUNCI 1: Speed lambat (makin besar angka, makin pelan & mulus)
+                speed: 4000,
+
+                // KUNCI 2: Autoplay tanpa jeda
+                autoplay: {
+                    delay: 0,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true, // Kalau mouse nempel, dia berhenti sebentar (opsional)
+                },
+
+                breakpoints: {
+                    576: {
+                        slidesPerView: 3,
+                        spaceBetween: 30,
+                    },
+                    768: {
+                        slidesPerView: 4,
+                        spaceBetween: 40,
+                    },
+                    1024: {
+                        slidesPerView: 5,
+                        spaceBetween: 50,
+                    },
+                    1200: {
+                        slidesPerView: 6,
+                        spaceBetween: 60,
+                    }
+                }
+            });
+
         });
     </script>
-
 
 </body>
 

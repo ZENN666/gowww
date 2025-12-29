@@ -4,7 +4,7 @@
 
             <!-- BRAND -->
             <a class="navbar-brand fw-bold d-flex align-items-center" href="<?= base_url() ?>">
-                <img src="<?= base_url('assets/img/gow_tgl.webp') ?>" alt="GOW Logo"
+                <img src="<?= base_url('assets/img/gow.webp') ?>" alt="GOW Logo"
                     style="height:36px; margin-right:10px;">
                 <span class="brand-text">GOW Kota Tegal</span>
             </a>

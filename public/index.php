@@ -37,7 +37,6 @@ $router->get(
 );
 
 // Halaman statis
-$router->get('#^profil$#', fn() => $pages->profil());
 $router->get('#^visimisi$#', fn() => $pages->visimisi());
 $router->get('#^struktur$#', fn() => $pages->struktur());
 $router->get('#^galeri$#', fn() => $pages->galeri());
