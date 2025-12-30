@@ -86,7 +86,7 @@
     <section class="partner-section">
         <div class="container">
             <div class="partner-title">
-                <h3>Organisasi Anggota & Mitra</h3>
+                <h3>Organisasi Anggota & Partner</h3>
                 <p class="text-muted">Bersinergi membangun Kota Tegal</p>
             </div>
             <div class="swiper logo-swiper">

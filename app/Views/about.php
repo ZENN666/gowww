@@ -146,9 +146,11 @@ $title = 'Tentang GOW | Visi & Misi';
 
                     <div class="mb-4">
                         <h5 class="fw-bold text-uppercase text-warning mb-2" style="font-size: 1rem;">
-                            <i class="bi bi-eye me-2"></i> Visi Kami
+                            <i class="bi bi-eye me-2"></i> VISI :
                         </h5>
-                        <div class="visi-box shadow-sm p-3 mb-0" style="border-left-width: 4px;">
+
+                        <div class="visi-box shadow-sm p-3 mb-0"
+                            style="border-left-width: 4px; background: linear-gradient(to right, #fff8f0 40%, rgba(255, 255, 255, 0) 100%);">
                             <p class="fw-medium fst-italic text-dark mb-0"
                                 style="line-height: 1.6; font-size: 1.05rem;">
                                 "Terwujudnya perempuan Indonesia yang berkualitas, berdaya saing, bermartabat, dan
@@ -160,11 +162,10 @@ $title = 'Tentang GOW | Visi & Misi';
 
                     <div>
                         <h5 class="fw-bold text-uppercase text-warning mb-3" style="font-size: 1rem;">
-                            <i class="bi bi-bullseye me-2"></i> Misi Kami
+                            <i class="bi bi-bullseye me-2"></i> MISI :
                         </h5>
 
                         <div class="misi-list">
-
                             <div class="misi-item mb-3">
                                 <div class="misi-icon shadow-sm"
                                     style="width: 32px; height: 32px; min-width: 32px; font-size: 0.9rem; margin-right: 12px;">

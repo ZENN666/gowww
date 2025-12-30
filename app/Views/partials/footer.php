@@ -1,11 +1,11 @@
 <footer class="bg-dark text-white pt-5 pb-4 mt-5" style="border-top: 5px solid #ff7f00;">
     <div class="container">
 
-        <div class="row align-items-center g-4 text-start">
+        <div class="row align-items-start g-4 text-start">
 
-            <div class="col-lg-3 col-md-12 text-center text-lg-start">
+            <div class="col-lg-2 col-md-12 text-center text-lg-start">
                 <img src="<?= base_url('assets/img/gow.webp') ?>" alt="Logo GOW" class="img-fluid"
-                    style="max-height: 160px; width: auto;">
+                    style="max-height: 120px; width: auto;">
             </div>
 
             <div class="col-lg-3 col-md-4">
@@ -26,7 +26,7 @@
                 </ul>
             </div>
 
-            <div class="col-lg-3 col-md-4">
+            <div class="col-lg-4 col-md-4">
                 <h6 class="text-uppercase fw-bold text-warning mb-3" style="letter-spacing: 1px;">Sosial Media</h6>
                 <div class="d-flex gap-2">
                     <a href="<?= base_url('coming-soon') ?>"
