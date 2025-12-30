@@ -3,151 +3,243 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Kelola Berita</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kelola Berita | Admin GOW</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
         body {
             background-color: #f5f6fa;
+            overflow-x: hidden;
         }
 
-        .app-bar {
-            background-color: #ff7f00;
+        /* --- SIDEBAR STYLE --- */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background-color: #2c3e50;
+            /* Dark Blue/Grey */
             color: #fff;
-            padding: 16px 24px;
-            margin-bottom: 20px;
+            transition: all 0.3s;
         }
 
-        .app-bar h4 {
-            margin: 0;
-            font-weight: 600;
+        .sidebar-header {
+            padding: 20px;
+            background-color: #1a252f;
+            border-bottom: 1px solid #34495e;
         }
 
-        .page-header {
-            margin-bottom: 1rem;
-        }
-
-        .card {
-            border: none;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        .table th {
-            background-color: #f8f9fc;
-            font-weight: 600;
-        }
-
-        .btn-icon {
-            padding: .25rem .6rem;
-            font-size: .85rem;
-        }
-
-        /* Tambahan style untuk link navigasi */
-        .nav-link-custom {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            margin-right: 20px;
+        .nav-pills .nav-link {
+            color: #b0b8c1;
+            padding: 12px 20px;
+            margin-bottom: 5px;
             font-weight: 500;
-            transition: 0.3s;
+            border-radius: 0;
+            border-left: 4px solid transparent;
         }
 
-        .nav-link-custom:hover,
-        .nav-link-custom.active {
+        .nav-pills .nav-link:hover {
             color: #fff;
-            text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Active State warna Orange GOW */
+        .nav-pills .nav-link.active {
+            background-color: rgba(255, 127, 0, 0.1);
+            color: #ff7f00;
+            border-left-color: #ff7f00;
+        }
+
+        .nav-pills .nav-link i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* --- MAIN CONTENT STYLE --- */
+        .main-content {
+            margin-left: 250px;
+            /* Lebar Sidebar */
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        /* --- TOP HEADER (Mobile Toggle) --- */
+        .top-header {
+            background: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* --- RESPONSIVE (HP) --- */
+        @media (max-width: 768px) {
+            .sidebar {
+                margin-left: -250px;
+                /* Sembunyikan sidebar */
+            }
+
+            .sidebar.active {
+                margin-left: 0;
+                /* Munculkan */
+            }
+
+            .main-content {
+                margin-left: 0;
+                /* Full width */
+            }
+
+            .overlay {
+                display: none;
+                position: fixed;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 900;
+                top: 0;
+                left: 0;
+            }
+
+            .overlay.active {
+                display: block;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div class="app-bar d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-            <h4 class="mb-0 me-4">Admin Panel</h4>
-            <nav class="d-none d-md-block">
-                <a href="<?= base_url('admin/berita') ?>" class="nav-link-custom active">
-                    <i class="bi bi-newspaper"></i> Berita
-                </a>
-                <a href="<?= base_url('admin/agenda') ?>" class="nav-link-custom">
-                    <i class="bi bi-calendar-event"></i> Agenda
-                </a>
-            </nav>
+    <div class="overlay" id="overlay"></div>
+
+    <nav class="sidebar d-flex flex-column" id="sidebar">
+        <div class="sidebar-header d-flex align-items-center">
+            <img src="<?= base_url('assets/img/gow.webp') ?>" alt="Logo" width="40" class="me-2">
+            <div>
+                <h6 class="m-0 fw-bold">Admin Panel</h6>
+                <small style="font-size: 10px; opacity: 0.7;">GOW KOTA TEGAL</small>
+            </div>
         </div>
-        <a href="<?= base_url('admin/logout') ?>" class="btn btn-sm btn-light text-danger fw-bold">
-            Logout <i class="bi bi-box-arrow-right"></i>
-        </a>
-    </div>
 
-    <div class="container-fluid px-4 pb-4">
+        <div class="flex-grow-1 py-3">
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="<?= base_url('admin/berita') ?>" class="nav-link active">
+                        <i class="bi bi-newspaper"></i> Kelola Berita
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= base_url('admin/agenda') ?>" class="nav-link">
+                        <i class="bi bi-calendar-event"></i> Kelola Agenda
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-        <nav aria-label="breadcrumb" class="mb-3">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active">Kelola Berita</li>
-            </ol>
-        </nav>
-
-        <div class="page-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">Daftar Berita</h5>
-            <a href="<?= base_url('admin/berita/create') ?>" class="btn btn-success">
-                <i class="bi bi-plus-circle"></i> Tambah Berita
+        <div class="p-3 border-top border-secondary">
+            <a href="<?= base_url('admin/logout') ?>"
+                class="btn btn-danger w-100 btn-sm d-flex align-items-center justify-content-center">
+                <i class="bi bi-box-arrow-left me-2"></i> Logout
             </a>
         </div>
+    </nav>
 
-        <div class="card mt-3">
+    <div class="main-content">
+
+        <div class="top-header">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-light d-md-none me-3" id="sidebarToggle">
+                    <i class="bi bi-list fs-4"></i>
+                </button>
+                <h5 class="m-0 fw-bold text-dark">Berita</h5>
+            </div>
+            <div class="d-none d-md-block">
+                <span class="text-muted small">Selamat Datang, Admin</span>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h6 class="m-0 fw-bold">Daftar Berita</h6>
+                <a href="<?= base_url('admin/berita/create') ?>" class="btn btn-sm btn-success">
+                    <i class="bi bi-plus-circle"></i> Tambah
+                </a>
+            </div>
             <div class="card-body p-0">
-
-                <table class="table table-hover align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th style="width:5%">#</th>
-                            <th>Judul</th>
-                            <th>Penulis</th>
-                            <th style="width:15%">Tanggal</th>
-                            <th style="width:20%">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        <?php if (empty($posts)): ?>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
                             <tr>
-                                <td colspan="5" class="text-center text-muted py-4">
-                                    Belum ada berita
-                                </td>
+                                <th class="ps-4" style="width:5%">#</th>
+                                <th>Judul</th>
+                                <th>Penulis</th>
+                                <th>Tanggal</th>
+                                <th class="text-end pe-4">Aksi</th>
                             </tr>
-                        <?php endif; ?>
+                        </thead>
+                        <tbody>
+                            <?php if (empty($posts)): ?>
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-5">
+                                        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                                        Belum ada berita
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
 
-                        <?php foreach ($posts as $i => $post): ?>
-                            <tr>
-                                <td><?= $i + 1 ?></td>
-                                <td><?= htmlspecialchars($post['title']) ?></td>
-                                <td><?= htmlspecialchars($post['author'] ?? '-') ?></td>
-                                <td><?= date('d M Y', strtotime($post['created_at'])) ?></td>
-                                <td>
-                                    <a href="<?= base_url('admin/berita/edit/' . $post['slug']) ?>"
-                                        class="btn btn-sm btn-success btn-icon">
-                                        <i class="bi bi-pencil-square"></i> Edit
-                                    </a>
-
-                                    <form action="<?= base_url('admin/berita/delete/' . $post['slug']) ?>" method="POST"
-                                        style="display:inline-block" onsubmit="return confirm('Yakin hapus berita ini?')">
-                                        <button class="btn btn-sm btn-danger btn-icon">
-                                            <i class="bi bi-trash"></i> Hapus
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-
-                    </tbody>
-                </table>
-
+                            <?php foreach ($posts as $i => $post): ?>
+                                <tr>
+                                    <td class="ps-4"><?= $i + 1 ?></td>
+                                    <td>
+                                        <span class="fw-semibold text-dark"><?= htmlspecialchars($post['title']) ?></span>
+                                    </td>
+                                    <td><?= htmlspecialchars($post['author'] ?? 'Admin') ?></td>
+                                    <td><?= date('d M Y', strtotime($post['created_at'])) ?></td>
+                                    <td class="text-end pe-4">
+                                        <a href="<?= base_url('admin/berita/edit/' . $post['slug']) ?>"
+                                            class="btn btn-sm btn-outline-primary me-1">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <form action="<?= base_url('admin/berita/delete/' . $post['slug']) ?>" method="POST"
+                                            style="display:inline-block"
+                                            onsubmit="return confirm('Yakin hapus berita ini?')">
+                                            <button class="btn btn-sm btn-outline-danger">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
     </div>
 
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const toggleBtn = document.getElementById('sidebarToggle');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+    </script>
 </body>
 
 </html>
