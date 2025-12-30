@@ -120,7 +120,7 @@
         <div class="sidebar-header d-flex align-items-center">
             <img src="<?= base_url('assets/img/gow.webp') ?>" alt="Logo" width="40" class="me-2">
             <div>
-                <h6 class="m-0 fw-bold">Admin Panel</h6>
+                <h6 class="m-0 fw-bold">ADMIN PANEL</h6>
                 <small style="font-size: 10px; opacity: 0.7;">GOW KOTA TEGAL</small>
             </div>
         </div>
@@ -143,7 +143,7 @@
         <div class="p-3 border-top border-secondary">
             <a href="<?= base_url('admin/logout') ?>"
                 class="btn btn-danger w-100 btn-sm d-flex align-items-center justify-content-center">
-                <i class="bi bi-box-arrow-left me-2"></i> Logout
+                <i class="bi bi-box-arrow-left me-2"></i> LOGOUT
             </a>
         </div>
     </nav>

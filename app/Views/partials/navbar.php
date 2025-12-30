@@ -1,4 +1,45 @@
 <div class="gow-navbar-wrapper">
+
+    <style>
+        /* Bikin dropdown jadi 'kaca' (Glassmorphism) */
+        .gow-navbar .dropdown-menu {
+            background: rgba(255, 255, 255, 0.85);
+            /* Putih transparan */
+            backdrop-filter: blur(10px);
+            /* Efek blur di belakangnya */
+            -webkit-backdrop-filter: blur(10px);
+            /* Support Safari */
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            /* Border halus */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            /* Bayangan lembut */
+            border-radius: 12px;
+            /* Sudut membulat */
+            margin-top: 10px;
+            /* Jarak dari navbar */
+            padding: 8px;
+        }
+
+        /* Style Item Dropdown */
+        .gow-navbar .dropdown-item {
+            color: #333;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        /* Hover Effect: Geser kanan dikit + warna oranye */
+        .gow-navbar .dropdown-item:hover,
+        .gow-navbar .dropdown-item:focus {
+            background-color: rgba(255, 127, 0, 0.1);
+            /* Orange transparan */
+            color: #ff7f00;
+            /* Teks Orange */
+            transform: translateX(5px);
+        }
+    </style>
+
     <nav class="navbar navbar-expand-lg gow-navbar">
         <div class="container-fluid">
 
@@ -21,8 +62,20 @@
                         <a class="nav-link fw-medium" href="<?= base_url() ?>">BERANDA</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link fw-medium" href="<?= base_url('about') ?>">TENTANG KAMI</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-medium" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            TENTANG KAMI
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end fade-down">
+                            <li>
+                                <a class="dropdown-item" href="<?= base_url('about#visi-misi') ?>">VISI & MISI</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="<?= base_url('about#struktur') ?>">STRUKTUR
+                                    ORGANISASI</a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li class="nav-item">

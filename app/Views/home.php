@@ -75,7 +75,7 @@
                             edukasi yang bermanfaat bagi seluruh anggota maupun masyarakat luas.</p>
                     </div>
                     <div class="mt-4">
-                        <div class="sambutan-name">Ny. Debby Firoeza Indiany</div>
+                        <div class="sambutan-name">Ny. Debby Firoeza Indiany, S.E., M.M.</div>
                         <div class="sambutan-jabatan">Ketua Umum GOW Kota Tegal Periode 2025-2030</div>
                     </div>
                 </div>
