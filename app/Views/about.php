@@ -21,6 +21,7 @@
             <h1 class="fw-bold text-dark">Coming Soon</h1>
             <p class="lead text-muted">Halaman ini sedang dalam tahap perbaikan.</p>
             <hr class="my-4">
+            <p>Konten mengenai Sejarah, Visi Misi, dan Struktur Organisasi akan segera hadir.</p>
             <a href="<?= base_url() ?>" class="btn btn-warning text-dark fw-bold">
                 <i class="bi bi-arrow-left"></i> Kembali ke Beranda
             </a>

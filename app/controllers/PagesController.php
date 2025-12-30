@@ -38,5 +38,14 @@ class PagesController
         // Karena ini PHP native custom, biasanya pake include/require
         require_once __DIR__ . '/../views/coming_soon.php';
     }
+
+    public function about()
+    {
+        // Setup data title (opsional, kalau di view butuh $title)
+        $title = 'Tentang GOW Kota Tegal';
+
+        // Panggil View secara manual (karena ini PHP Native)
+        include __DIR__ . '/../Views/about.php';
+    }
 }
 

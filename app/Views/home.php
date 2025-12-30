@@ -191,62 +191,6 @@
         </div>
     </section>
 
-    <section class="contact-info-section">
-        <div class="container">
-            <div class="row align-items-start">
-
-                <div class="col-lg-3 col-md-12 mb-4 mb-lg-0 text-center text-lg-start">
-                    <img src="<?= base_url('assets/img/gow.webp') ?>" alt="Logo GOW" class="contact-logo img-fluid">
-                </div>
-
-                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-                    <h5 class="contact-heading">ALAMAT</h5>
-                    <p class="contact-text">
-                        Jl. Kartini No. 123, Mangkukusuman,<br>
-                        Kec. Tegal Timur, Kota Tegal,<br>
-                        Jawa Tengah 52123
-                    </p>
-                </div>
-
-                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
-                    <h5 class="contact-heading">INFORMASI KONTAK</h5>
-                    <ul class="list-unstyled contact-details">
-                        <li><strong>Telepon :</strong> (0283) 123456</li>
-                        <li><strong>Email :</strong> info@gowkotategal.org</li>
-                        <li><strong>Layanan :</strong> Senin - Jumat (08:00 - 16:00 WIB)</li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-md-12 text-center text-lg-start">
-                    <h5 class="contact-heading">SOSIAL MEDIA</h5>
-                    <div class="social-icons mt-3">
-
-                        <a href="<?= base_url('coming-soon') ?>" target="_blank" class="social-btn"
-                            aria-label="LinkedIn">
-                            <i class="bi bi-linkedin"></i>
-                        </a>
-
-                        <a href="<?= base_url('coming-soon') ?>" target="_blank" class="social-btn"
-                            aria-label="Facebook">
-                            <i class="bi bi-facebook"></i>
-                        </a>
-
-                        <a href="https://www.instagram.com/" target="_blank" class="social-btn" aria-label="Instagram">
-                            <i class="bi bi-instagram"></i>
-                        </a>
-
-                        <a href="<?= base_url('coming-soon') ?>" target="_blank" class="social-btn">
-                            <i class="bi bi-youtube"></i>
-                        </a>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-    ```
-
     <?php include __DIR__ . '/partials/footer.php'; ?>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

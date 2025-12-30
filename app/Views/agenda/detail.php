@@ -130,9 +130,11 @@ $share_text = "Jangan lewatkan kegiatan ini: " . $agenda['judul'];
 
                     <div class="agenda-desc mb-4">
                         <h5 class="fw-bold fs-6 border-bottom pb-2 mb-3">Deskripsi :</h5>
+
                         <div class="text-secondary"
                             style="white-space: pre-wrap; word-wrap: break-word; text-align: justify;">
-                            <?= htmlspecialchars(preg_replace('/^\s+|\s+$/u', '', $agenda['deskripsi'])) ?></div>
+                            <?= htmlspecialchars(trim($agenda['deskripsi'])) ?>
+                        </div>
                     </div>
 
                     <div class="pt-3 border-top">
