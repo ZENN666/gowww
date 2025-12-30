@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <title>Kelola Berita</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
         body {
             background-color: #f5f6fa;
         }
 
-        /* App Bar */
         .app-bar {
             background-color: #ff7f00;
             color: #fff;
@@ -42,19 +42,45 @@
             padding: .25rem .6rem;
             font-size: .85rem;
         }
+
+        /* Tambahan style untuk link navigasi */
+        .nav-link-custom {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-link-custom:hover,
+        .nav-link-custom.active {
+            color: #fff;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- App Bar -->
-    <div class="app-bar">
-        <h4>Kelola Berita</h4>
+    <div class="app-bar d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+            <h4 class="mb-0 me-4">Admin Panel</h4>
+            <nav class="d-none d-md-block">
+                <a href="<?= base_url('admin/berita') ?>" class="nav-link-custom active">
+                    <i class="bi bi-newspaper"></i> Berita
+                </a>
+                <a href="<?= base_url('admin/agenda') ?>" class="nav-link-custom">
+                    <i class="bi bi-calendar-event"></i> Agenda
+                </a>
+            </nav>
+        </div>
+        <a href="<?= base_url('admin/logout') ?>" class="btn btn-sm btn-light text-danger fw-bold">
+            Logout <i class="bi bi-box-arrow-right"></i>
+        </a>
     </div>
 
     <div class="container-fluid px-4 pb-4">
 
-        <!-- Breadcrumb -->
         <nav aria-label="breadcrumb" class="mb-3">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -62,15 +88,13 @@
             </ol>
         </nav>
 
-        <!-- Header -->
-        <div class="page-header">
-            <h5 class="mb-2">Daftar Berita</h5>
+        <div class="page-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Daftar Berita</h5>
             <a href="<?= base_url('admin/berita/create') ?>" class="btn btn-success">
-                + Tambah Berita
+                <i class="bi bi-plus-circle"></i> Tambah Berita
             </a>
         </div>
 
-        <!-- Card -->
         <div class="card mt-3">
             <div class="card-body p-0">
 
@@ -103,13 +127,13 @@
                                 <td>
                                     <a href="<?= base_url('admin/berita/edit/' . $post['slug']) ?>"
                                         class="btn btn-sm btn-success btn-icon">
-                                        Edit
+                                        <i class="bi bi-pencil-square"></i> Edit
                                     </a>
 
                                     <form action="<?= base_url('admin/berita/delete/' . $post['slug']) ?>" method="POST"
                                         style="display:inline-block" onsubmit="return confirm('Yakin hapus berita ini?')">
                                         <button class="btn btn-sm btn-danger btn-icon">
-                                            Hapus
+                                            <i class="bi bi-trash"></i> Hapus
                                         </button>
                                     </form>
                                 </td>

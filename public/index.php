@@ -10,10 +10,12 @@ require_once __DIR__ . '/../app/Core/Router.php';
 require_once __DIR__ . '/../app/Controllers/HomeController.php';
 require_once __DIR__ . '/../app/Controllers/BeritaController.php';
 require_once __DIR__ . '/../app/Controllers/PagesController.php';
+require_once __DIR__ . '/../app/Controllers/AgendaController.php';
 
 // Controllers admin
 require_once __DIR__ . '/../app/Controllers/AuthController.php';
 require_once __DIR__ . '/../app/Controllers/BeritaAdminController.php';
+require_once __DIR__ . '/../app/Controllers/AgendaAdminController.php';
 
 //helpers
 require_once __DIR__ . '/../app/helpers/date_helper.php';
@@ -36,7 +38,14 @@ $router->get(
   fn($slug) => (new BeritaController())->detail($slug)
 );
 
-// Halaman statis
+// Agenda Publik
+$router->get('#^agenda$#', fn() => (new AgendaController())->index());
+$router->get(
+  '#^agenda/([\w-]+)$#',
+  fn($slug) => (new AgendaController())->detail($slug)
+);
+
+// Halaman statis 
 $router->get('#^visimisi$#', fn() => $pages->visimisi());
 $router->get('#^struktur$#', fn() => $pages->struktur());
 $router->get('#^galeri$#', fn() => $pages->galeri());
@@ -69,6 +78,27 @@ $router->post(
 $router->post(
   '#^admin/berita/delete/([\w-]+)$#',
   fn($slug) => (new BeritaAdminController())->delete($slug)
+);
+
+// ================= ROUTES ADMIN AGENDA =================
+
+$router->get('#^admin/agenda$#', fn() => (new AgendaAdminController())->index());
+$router->get('#^admin/agenda/create$#', fn() => (new AgendaAdminController())->create());
+$router->post('#^admin/agenda/store$#', fn() => (new AgendaAdminController())->store());
+
+$router->get(
+  '#^admin/agenda/edit/([\w-]+)$#',
+  fn($slug) => (new AgendaAdminController())->edit($slug)
+);
+
+$router->post(
+  '#^admin/agenda/update/([\w-]+)$#',
+  fn($slug) => (new AgendaAdminController())->update($slug)
+);
+
+$router->post(
+  '#^admin/agenda/delete/([\w-]+)$#',
+  fn($slug) => (new AgendaAdminController())->delete($slug)
 );
 
 // ================= URI NORMALIZATION =================

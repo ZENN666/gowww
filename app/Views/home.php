@@ -145,6 +145,52 @@
         </div>
     </section>
 
+    <section class="agenda-section py-5" style="background-color: #fff8f0;">
+        <div class="container">
+            <div class="row align-items-center mb-4">
+                <div class="col">
+                    <h3 class="fw-bold text-dark">Agenda Kegiatan</h3>
+                    <p class="text-muted">Jangan lewatkan kegiatan GOW mendatang</p>
+                </div>
+                <div class="col-auto">
+                    <a href="<?= base_url('agenda') ?>" class="btn btn-outline-warning">Lihat Semua</a>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <?php if (empty($upcomingAgendas)): ?>
+                    <div class="col-12 text-center text-muted">Belum ada agenda terdekat.</div>
+                <?php else: ?>
+                    <?php foreach ($upcomingAgendas as $agn): ?>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="d-flex bg-white rounded shadow-sm overflow-hidden h-100">
+                                <div class="bg-warning text-white p-3 d-flex flex-column justify-content-center align-items-center"
+                                    style="min-width: 90px;">
+                                    <span class="h2 fw-bold mb-0"><?= date('d', strtotime($agn['tanggal_mulai'])) ?></span>
+                                    <span class="small text-uppercase"><?= date('M', strtotime($agn['tanggal_mulai'])) ?></span>
+                                </div>
+                                <div class="p-3 flex-grow-1">
+                                    <h6 class="fw-bold mb-1">
+                                        <a href="<?= base_url('agenda/' . $agn['slug']) ?>"
+                                            class="text-dark text-decoration-none">
+                                            <?= htmlspecialchars($agn['judul']) ?>
+                                        </a>
+                                    </h6>
+                                    <div class="text-muted small mb-2">
+                                        <i class="bi bi-clock me-1"></i> <?= date('H:i', strtotime($agn['waktu_mulai'])) ?> WIB
+                                    </div>
+                                    <div class="text-muted small text-truncate" style="max-width: 200px;">
+                                        <i class="bi bi-geo-alt me-1"></i> <?= htmlspecialchars($agn['lokasi']) ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
+
     <section class="contact-info-section">
         <div class="container">
             <div class="row align-items-start">
