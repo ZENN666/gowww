@@ -83,6 +83,11 @@
             border-color: #ff7f00;
         }
 
+        /* Style khusus input password agar tidak menabrak icon mata */
+        #password {
+            padding-right: 45px;
+        }
+
         .btn-login {
             background-color: #ff7f00;
             border: none;
@@ -113,8 +118,10 @@
         <div
             class="col-lg-6 d-none d-lg-flex flex-column align-items-center justify-content-center text-center login-sidebar px-5">
             <div style="z-index: 2;">
-                <img src="<?= base_url('assets/img/gow.webp') ?>" alt="Logo GOW"
-                    class="mb-4 bg-white rounded-circle p-2 shadow" style="width: 120px;">
+
+                <img src="<?= base_url('assets/img/gow.webp') ?>" alt="Logo GOW" class="mb-4"
+                    style="width: 150px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.9));">
+
                 <h2 class="fw-bold mb-2">GOW KOTA TEGAL</h2>
                 <p class="lead opacity-75">Panel Administrasi Web</p>
                 <hr class="mx-auto my-4" style="width: 50px; border: 2px solid white; opacity: 1;">
@@ -137,10 +144,16 @@
                         <label for="username" class="text-muted"><i class="bi bi-person me-2"></i>Username</label>
                     </div>
 
-                    <div class="form-floating mb-4">
+                    <div class="form-floating mb-4 position-relative">
                         <input type="password" name="password" class="form-control" id="password" placeholder="Password"
                             required>
                         <label for="password" class="text-muted"><i class="bi bi-lock me-2"></i>Password</label>
+
+                        <span id="togglePassword"
+                            class="position-absolute top-50 end-0 translate-middle-y me-3 text-muted"
+                            style="cursor: pointer; z-index: 10; padding: 5px;">
+                            <i class="bi bi-eye-slash" id="iconEye" style="font-size: 1.1rem;"></i>
+                        </span>
                     </div>
 
                     <div class="d-grid mb-4">
@@ -168,28 +181,49 @@
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
+        // === 1. LOGIC SHOW/HIDE PASSWORD ===
+        const togglePassword = document.querySelector('#togglePassword');
+        const passwordInput = document.querySelector('#password');
+        const iconEye = document.querySelector('#iconEye');
+
+        togglePassword.addEventListener('click', function () {
+            // Cek tipe saat ini
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // Ganti icon
+            if (type === 'text') {
+                iconEye.classList.remove('bi-eye-slash');
+                iconEye.classList.add('bi-eye');
+            } else {
+                iconEye.classList.remove('bi-eye');
+                iconEye.classList.add('bi-eye-slash');
+            }
+        });
+
+        // === 2. LOGIC LOGIN FETCH API ===
         document.getElementById('loginForm').addEventListener('submit', function (e) {
-            e.preventDefault(); // Mencegah form submit biasa (reload page)
+            e.preventDefault();
 
             let btn = document.getElementById('btnLogin');
             let originalText = btn.innerHTML;
 
-            // 1. Ubah tombol jadi loading
+            // Loading state
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Memproses...';
             btn.disabled = true;
 
             let formData = new FormData(this);
 
-            // 2. Kirim data ke backend pake Fetch API
             fetch(this.action, {
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json()) // Pastikan backend return JSON!
+                .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
-                        // 3. JIKA SUKSES: Tampilkan SweetAlert
                         Swal.fire({
                             icon: 'success',
                             title: 'Login Berhasil!',
@@ -198,19 +232,15 @@
                             timer: 1500,
                             timerProgressBar: true
                         }).then(() => {
-                            // 4. Redirect setelah alert selesai
                             window.location.href = data.redirect_url;
                         });
                     } else {
-                        // JIKA GAGAL
                         Swal.fire({
                             icon: 'error',
                             title: 'Login Gagal',
                             text: data.message || 'Username atau Password salah.',
                             confirmButtonColor: '#ff7f00'
                         });
-
-                        // Reset tombol
                         btn.innerHTML = originalText;
                         btn.disabled = false;
                     }
@@ -228,8 +258,6 @@
                 });
         });
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
