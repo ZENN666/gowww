@@ -33,7 +33,7 @@
             border-bottom: 1px solid #34495e;
         }
 
-        .nav-pills .nav-link {
+        .sidebar .nav-pills .nav-link {
             color: #b0b8c1;
             padding: 12px 20px;
             margin-bottom: 5px;
@@ -42,18 +42,18 @@
             border-left: 4px solid transparent;
         }
 
-        .nav-pills .nav-link:hover {
+        .sidebar .nav-pills .nav-link:hover {
             color: #fff;
             background-color: rgba(255, 255, 255, 0.05);
         }
 
-        .nav-pills .nav-link.active {
+        .sidebar .nav-pills .nav-link.active {
             background-color: rgba(255, 127, 0, 0.1);
             color: #ff7f00;
             border-left-color: #ff7f00;
         }
 
-        .nav-pills .nav-link i {
+        .sidebar .nav-pills .nav-link i {
             margin-right: 10px;
             font-size: 1.1rem;
         }
@@ -116,37 +116,7 @@
 
     <div class="overlay" id="overlay"></div>
 
-    <nav class="sidebar d-flex flex-column" id="sidebar">
-        <div class="sidebar-header d-flex align-items-center">
-            <img src="<?= base_url('assets/img/gow.webp') ?>" alt="Logo" width="40" class="me-2">
-            <div>
-                <h6 class="m-0 fw-bold">ADMIN PANEL</h6>
-                <small style="font-size: 10px; opacity: 0.7;">GOW KOTA TEGAL</small>
-            </div>
-        </div>
-
-        <div class="flex-grow-1 py-3">
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item">
-                    <a href="<?= base_url('admin/berita') ?>" class="nav-link active">
-                        <i class="bi bi-newspaper"></i> Kelola Berita
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?= base_url('admin/agenda') ?>" class="nav-link">
-                        <i class="bi bi-calendar-event"></i> Kelola Agenda
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="p-3 border-top border-secondary">
-            <a href="<?= base_url('admin/logout') ?>"
-                class="btn btn-danger w-100 btn-sm d-flex align-items-center justify-content-center">
-                <i class="bi bi-box-arrow-left me-2"></i> LOGOUT
-            </a>
-        </div>
-    </nav>
+    <?php include __DIR__ . '/../../partials/sidebar.php'; ?>
 
     <div class="main-content">
 
@@ -192,7 +162,6 @@
                         <div class="col-md-6 mb-4">
                             <label for="created_at" class="form-label fw-semibold">Tanggal & Jam Tayang</label>
                             <?php
-                            // Format tanggal database (YYYY-MM-DD HH:MM:SS) menjadi format input HTML5 (YYYY-MM-DDTHH:MM)
                             $dateValue = date('Y-m-d\TH:i', strtotime($post['created_at']));
                             ?>
                             <input type="datetime-local" class="form-control" id="created_at" name="created_at"
@@ -208,12 +177,14 @@
                                 Kosongkan jika tidak ingin mengganti gambar
                             </small>
                         </div>
+
                         <div class="col-md-6 mb-4">
                             <label for="thumbnail_caption" class="form-label fw-semibold">Deskripsi Gambar
                                 (Caption)</label>
                             <input type="text" class="form-control" id="thumbnail_caption" name="thumbnail_caption"
-                                value="<?= htmlspecialchars($post['thumbnail_caption'] ?? '') ?>"
-                                placeholder="Contoh: Kegiatan rapat koordinasi GOW...">
+                                value="<?= htmlspecialchars($post['thumbnail_caption'] ?? '') ?>" maxlength="250"
+                                placeholder="Maksimal 250 Karakter...">
+                            <small class="text-muted" style="font-size: 11px;">Maks. 250 karakter</small>
                         </div>
                     </div>
 
@@ -243,19 +214,23 @@
     </div>
 
     <script>
-        const sidebar = document.getElementById('sidebar');
+        const sidebar = document.querySelector('.sidebar');
         const overlay = document.getElementById('overlay');
         const toggleBtn = document.getElementById('sidebarToggle');
 
-        toggleBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-        });
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                if (sidebar) {
+                    sidebar.classList.toggle('active');
+                    overlay.classList.toggle('active');
+                }
+            });
 
-        overlay.addEventListener('click', () => {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
+            overlay.addEventListener('click', () => {
+                if (sidebar) sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
     </script>
 </body>
 

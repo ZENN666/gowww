@@ -27,7 +27,9 @@
                     <h1 class="my-3">Generasi Emas<br><span>Kota Tegal</span></h1>
                     <p>Wadah koordinasi organisasi wanita dalam mendukung pembangunan dan pemberdayaan perempuan di Kota
                         Tegal.</p>
-                    <a href="<?= base_url('profil') ?>" class="btn btn-hero mt-3">Selengkapnya →</a>
+
+                    <a href="<?= base_url('about') ?>" class="btn btn-hero mt-3">Selengkapnya →</a>
+
                 </div>
                 <div class="col-md-6 hero-image text-md-end text-center position-relative">
                     <div class="hero-shape-bg"></div>

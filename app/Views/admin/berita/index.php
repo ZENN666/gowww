@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Kelola Berita | Admin GOW</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -23,7 +24,6 @@
             left: 0;
             z-index: 1000;
             background-color: #2c3e50;
-            /* Dark Blue/Grey */
             color: #fff;
             transition: all 0.3s;
         }
@@ -34,7 +34,7 @@
             border-bottom: 1px solid #34495e;
         }
 
-        .nav-pills .nav-link {
+        .sidebar .nav-pills .nav-link {
             color: #b0b8c1;
             padding: 12px 20px;
             margin-bottom: 5px;
@@ -43,32 +43,29 @@
             border-left: 4px solid transparent;
         }
 
-        .nav-pills .nav-link:hover {
+        .sidebar .nav-pills .nav-link:hover {
             color: #fff;
             background-color: rgba(255, 255, 255, 0.05);
         }
 
-        /* Active State warna Orange GOW */
-        .nav-pills .nav-link.active {
+        .sidebar .nav-pills .nav-link.active {
             background-color: rgba(255, 127, 0, 0.1);
             color: #ff7f00;
             border-left-color: #ff7f00;
         }
 
-        .nav-pills .nav-link i {
+        .sidebar .nav-pills .nav-link i {
             margin-right: 10px;
             font-size: 1.1rem;
         }
 
-        /* --- MAIN CONTENT STYLE --- */
+        /* --- MAIN CONTENT --- */
         .main-content {
             margin-left: 250px;
-            /* Lebar Sidebar */
             padding: 20px;
             transition: all 0.3s;
         }
 
-        /* --- TOP HEADER (Mobile Toggle) --- */
         .top-header {
             background: #fff;
             padding: 15px 20px;
@@ -80,21 +77,18 @@
             align-items: center;
         }
 
-        /* --- RESPONSIVE (HP) --- */
+        /* --- RESPONSIVE MOBILE --- */
         @media (max-width: 768px) {
             .sidebar {
                 margin-left: -250px;
-                /* Sembunyikan sidebar */
             }
 
             .sidebar.active {
                 margin-left: 0;
-                /* Munculkan */
             }
 
             .main-content {
                 margin-left: 0;
-                /* Full width */
             }
 
             .overlay {
@@ -119,37 +113,7 @@
 
     <div class="overlay" id="overlay"></div>
 
-    <nav class="sidebar d-flex flex-column" id="sidebar">
-        <div class="sidebar-header d-flex align-items-center">
-            <img src="<?= base_url('assets/img/gow.webp') ?>" alt="Logo" width="40" class="me-2">
-            <div>
-                <h6 class="m-0 fw-bold">ADMIN PANEL</h6>
-                <small style="font-size: 10px; opacity: 0.7;">GOW KOTA TEGAL</small>
-            </div>
-        </div>
-
-        <div class="flex-grow-1 py-3">
-            <ul class="nav nav-pills flex-column mb-auto">
-                <li class="nav-item">
-                    <a href="<?= base_url('admin/berita') ?>" class="nav-link active">
-                        <i class="bi bi-newspaper"></i> Kelola Berita
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?= base_url('admin/agenda') ?>" class="nav-link">
-                        <i class="bi bi-calendar-event"></i> Kelola Agenda
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="p-3 border-top border-secondary">
-            <a href="<?= base_url('admin/logout') ?>"
-                class="btn btn-danger w-100 btn-sm d-flex align-items-center justify-content-center">
-                <i class="bi bi-box-arrow-left me-2"></i> LOGOUT
-            </a>
-        </div>
-    </nav>
+    <?php include __DIR__ . '/../../partials/sidebar.php'; ?>
 
     <div class="main-content">
 
@@ -185,6 +149,15 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php
+                            // --- LOGIKA SORTIR: TERBARU KE TERLAMA ---
+                            if (!empty($posts)) {
+                                usort($posts, function ($a, $b) {
+                                    return strtotime($b['created_at']) - strtotime($a['created_at']);
+                                });
+                            }
+                            ?>
+
                             <?php if (empty($posts)): ?>
                                 <tr>
                                     <td colspan="5" class="text-center text-muted py-5">
@@ -201,7 +174,9 @@
                                         <span class="fw-semibold text-dark"><?= htmlspecialchars($post['title']) ?></span>
                                     </td>
                                     <td><?= htmlspecialchars($post['author'] ?? 'Admin') ?></td>
-                                    <td><?= date('d M Y', strtotime($post['created_at'])) ?></td>
+                                    <td>
+                                        <?= date('d M Y', strtotime($post['created_at'])) ?>
+                                    </td>
                                     <td class="text-end pe-4">
                                         <a href="<?= base_url('admin/berita/edit/' . $post['slug']) ?>"
                                             class="btn btn-sm btn-outline-primary me-1">
@@ -226,19 +201,23 @@
     </div>
 
     <script>
-        const sidebar = document.getElementById('sidebar');
+        const sidebar = document.querySelector('.sidebar');
         const overlay = document.getElementById('overlay');
         const toggleBtn = document.getElementById('sidebarToggle');
 
-        toggleBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-        });
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', () => {
+                if (sidebar) {
+                    sidebar.classList.toggle('active');
+                    overlay.classList.toggle('active');
+                }
+            });
 
-        overlay.addEventListener('click', () => {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
+            overlay.addEventListener('click', () => {
+                if (sidebar) sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
     </script>
 </body>
 
