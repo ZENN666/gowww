@@ -1,13 +1,25 @@
 <?php
+// === SEO SECTION ===
 $title = 'Berita GOW Kota Tegal';
+
+// Logic Canonical URL
+// Tujuannya agar Google tahu bahwa '/berita' dan '/berita?page=1' adalah halaman yang sama (yaitu '/berita')
+$canonicalUrl = base_url('berita');
+if (isset($_GET['page']) && (int) $_GET['page'] > 1) {
+    $canonicalUrl .= '?page=' . (int) $_GET['page'];
+}
+
+// Pass variable ini ke layout.php (asumsi layout lu nangkep variable $extraHead atau $canonical)
+// Kalau layout lu ga support, lu harus edit layout.php buat echo variable ini di dalam <head>
+$canonical = $canonicalUrl;
+
 ob_start();
 ?>
 
 <link rel="stylesheet" href="<?= base_url('assets/css/style.css') ?>">
 
 <style>
-    /* ... (CSS Hero Section kamu yang lama tetep disini) ... */
-
+    /* ... (CSS Page Hero dll tetap sama seperti sebelumnya) ... */
     .page-hero {
         position: absolute;
         top: 0;
@@ -67,7 +79,7 @@ ob_start();
         }
     }
 
-    /* CSS Pagination Custom */
+    /* CSS Pagination & Animation */
     .pagination .page-link {
         color: #ff7f00;
         border: none;
@@ -86,7 +98,6 @@ ob_start();
         border-color: #ff7f00;
     }
 
-    /* Animasi Loading */
     .fade-in-item {
         animation: fadeIn 0.5s ease-in-out;
     }
@@ -103,7 +114,6 @@ ob_start();
         }
     }
 
-    /* Overlay Loading */
     #loadingOverlay {
         position: absolute;
         top: 0;
@@ -139,15 +149,8 @@ ob_start();
 
         <div class="row g-4" id="beritaContainer">
             <?php
-            // Panggil fungsi render yang sama dengan Controller
-            // Ini agar tampilan awal (First Load) tetap ada isinya (SEO Friendly)
-            $controller = new BeritaController();
-            // Teknik hack dikit biar bisa panggil private method di konteks view (atau buat public static method helper)
-            // TAPI biar aman sesuai kode Controller di atas, kita render manual loop pertama kali disini
-            // atau copy logic renderBeritaItems kesini.
-            // AGAR DRY: Sebaiknya logic render HTML dipisah jadi file partial.
-            // Tapi demi ngikutin struktur kamu, kita pake variable $posts dari controller index()
-            
+            // Logic ini hanya jalan saat First Load / Non-AJAX
+            // Kontennya sama persis kaya controller biar konsisten
             if (empty($posts)): ?>
                 <div class="col-12 text-center py-5">
                     <p class="text-muted fs-5">Belum ada berita yang diterbitkan.</p>
@@ -187,22 +190,27 @@ ob_start();
 
         <div class="mt-5" id="paginationContainer">
             <?php
-            // Render Pagination Awal
-            // Kita perlu instance helper atau render manual di sini untuk first load
-            // Biar gampang, render manual sesuai logic controller:
             if (isset($totalPages) && $totalPages > 1):
                 ?>
                 <nav aria-label="Page navigation">
                     <ul class="pagination justify-content-center">
                         <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-                            <a class="page-link ajax-pagination" href="<?= base_url('berita?page=' . ($page - 1)) ?>"
-                                data-page="<?= $page - 1 ?>">Previous</a>
+                            <?php
+                            // Logic SEO Manual: Halaman 1 gapake query param
+                            $prevPage = $page - 1;
+                            $prevUrl = ($prevPage == 1) ? base_url('berita') : base_url("berita?page=$prevPage");
+                            ?>
+                            <a class="page-link ajax-pagination" href="<?= $prevUrl ?>"
+                                data-page="<?= $prevPage ?>">Previous</a>
                         </li>
 
                         <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                             <li class="page-item <?= ($i == $page) ? 'active' : '' ?>">
-                                <a class="page-link ajax-pagination" href="<?= base_url('berita?page=' . $i) ?>"
-                                    data-page="<?= $i ?>"><?= $i ?></a>
+                                <?php
+                                // Logic SEO Manual
+                                $url = ($i == 1) ? base_url('berita') : base_url("berita?page=$i");
+                                ?>
+                                <a class="page-link ajax-pagination" href="<?= $url ?>" data-page="<?= $i ?>"><?= $i ?></a>
                             </li>
                         <?php endfor; ?>
 
@@ -220,39 +228,33 @@ ob_start();
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        // Logic JS tidak berubah banyak, cuma lebih stabil
 
-        // Fungsi untuk bind event listener (karena elemen pagination berubah-ubah)
         function attachPaginationEvents() {
             const paginationLinks = document.querySelectorAll('.ajax-pagination');
-
             paginationLinks.forEach(link => {
                 link.addEventListener('click', function (e) {
-                    e.preventDefault(); // Cegah refresh halaman
+                    e.preventDefault();
+                    // Cek disabled/active
+                    if (this.parentElement.classList.contains('disabled') || this.parentElement.classList.contains('active')) return;
 
-                    // Ambil URL dan halaman tujuan
                     const url = this.getAttribute('href');
-                    const page = this.getAttribute('data-page');
-
-                    // Validasi agar tidak klik disabled/current page
-                    if (this.parentElement.classList.contains('disabled') || this.parentElement.classList.contains('active')) {
-                        return;
-                    }
-
                     loadBerita(url);
                 });
             });
         }
 
-        // Fungsi Fetch Data
         function loadBerita(url) {
             const beritaContainer = document.getElementById('beritaContainer');
             const paginationContainer = document.getElementById('paginationContainer');
             const loadingOverlay = document.getElementById('loadingOverlay');
 
-            // Tambahkan parameter ajax=1 ke URL
-            const ajaxUrl = url.includes('?') ? url + '&ajax=1' : url + '?ajax=1';
+            // Tambahkan parameter ajax=1
+            // Cek apakah URL sudah ada query string '?'
+            const separator = url.includes('?') ? '&' : '?';
+            const ajaxUrl = url + separator + 'ajax=1';
 
-            // Tampilkan loading
+            // Loading UI
             loadingOverlay.style.display = 'flex';
             beritaContainer.style.opacity = '0.5';
 
@@ -260,40 +262,32 @@ ob_start();
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
-                        // Update Konten Berita
                         beritaContainer.innerHTML = data.html_content;
-
-                        // Update Pagination
                         paginationContainer.innerHTML = data.html_pagination;
 
-                        // Update URL Browser (SEO Friendly - History API)
+                        // Push Clean URL (yang dikirim dari controller 'new_url')
                         window.history.pushState({ path: data.new_url }, '', data.new_url);
 
-                        // Scroll ke atas section berita sedikit halus
                         const sectionTop = document.querySelector('.content-section').offsetTop;
                         window.scrollTo({ top: sectionTop - 100, behavior: 'smooth' });
 
-                        // Pasang event listener lagi ke tombol pagination baru
                         attachPaginationEvents();
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Gagal memuat berita. Silakan coba lagi.');
+                    // alert('Gagal memuat berita.'); // Optional
                 })
                 .finally(() => {
-                    // Sembunyikan loading
                     loadingOverlay.style.display = 'none';
                     beritaContainer.style.opacity = '1';
                 });
         }
 
-        // Jalankan event listener pertama kali
         attachPaginationEvents();
 
-        // Handle tombol Back/Forward Browser
+        // Handle Browser Back Button
         window.addEventListener('popstate', function (event) {
-            // Reload halaman penuh jika user tekan back button browser biar aman
             window.location.reload();
         });
     });
